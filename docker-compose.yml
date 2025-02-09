@@ -1,0 +1,41 @@
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: docker_postgres_container
+    environment:
+      POSTGRES_USER: natan
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: test_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql/init_users.sql:/docker-entrypoint-initdb.d/init_users.sql
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U natan -d test_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  microservice:
+    build:
+      context: .
+    container_name: docker_microservice_container
+    environment:
+      DATABASE_URL: postgresql://natan:pass@docker_postgres_container:5432/test_db
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8000:8000"        
+    networks:
+      - app_network
+
+volumes:
+  postgres_data:
+
+networks:
+  app_network:
