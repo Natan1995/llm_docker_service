@@ -1,0 +1,29 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+.pyenv/
+venv_microservice/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# FastAPI specific
+instance/
+config.py
+.env
+.env.*
+secrets.toml
+
+# Cache files
+*.log
+*.sqlite3
+*.db
+
+# Docker (Ignorar Dockerfile, pero NO docker-compose.yml)
+Dockerfile

@@ -25,3 +25,4 @@ class Sales(Base):
     quantity = Column(Integer)
     amount = Column(Numeric(10, 2))
     day = Column(DateTime, nullable=False)
+    
